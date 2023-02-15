@@ -18,22 +18,25 @@ const ICONS_BY_VARIANT = {
   error: AlertOctagon,
 };
 
-function Toast({ message, variant, showToast, toggleToast }) {
+function Toast({ children, variant, onRemoveToast }) {
   const IconTag = ICONS_BY_VARIANT[variant];
-
-  if (!showToast) {
-    return null;
-  }
 
   return (
     <div className={`${styles.toast} ${styles[variant]}`}>
       <div className={styles.iconContainer}>
         <IconTag size={24} />
       </div>
-      <p className={styles.content}>{message}</p>
-      <button className={styles.closeButton} onClick={toggleToast}>
+      <p className={styles.content}>
+        <VisuallyHidden>{variant}</VisuallyHidden>
+        {children}
+      </p>
+      <button
+        className={styles.closeButton}
+        onClick={onRemoveToast}
+        arialabel="Dismiss message"
+        ariaLive="off"
+      >
         <X size={24} />
-        <VisuallyHidden>Dismiss message</VisuallyHidden>
       </button>
     </div>
   );
